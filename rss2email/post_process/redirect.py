@@ -32,9 +32,14 @@ def process(feed, parsed, entry, guid, message):
 
     # Get the link
     link = entry['link']
+    if not link:
+        return message
 
     # Remove the redirect and modify the content
-    direct_link = urllib.request.urlopen(link).geturl()
+    try:
+        direct_link = urllib.request.urlopen(link).geturl()
+    except:
+        return message
     content = re.sub(re.escape(link), direct_link, content, re.MULTILINE)
 
     message.set_payload(content, charset=encoding)
