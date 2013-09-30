@@ -42,6 +42,10 @@ def process(feed, parsed, entry, guid, message):
         return message
     content = re.sub(re.escape(link), direct_link, content, re.MULTILINE)
 
+    # clear CTE and set message. It can be important to clear the CTE
+    # before setting the payload, since the payload is only re-encoded
+    # if CTE is not already set.
+    del message['Content-Transfer-Encoding']
     message.set_payload(content, charset=encoding)
 
     return message
