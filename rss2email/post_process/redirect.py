@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # rss2email.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Remove redirections on the post URL.
+"""Remove redirects on the post URL.
 
-Several websites use redirections (e.g. feedburner) for various reasons like
-statistics. you may want to avoid this for privacy or for durability.
+Several websites use redirects (e.g. feedburner) for various reasons like
+statistics. You may want to avoid this for privacy or for durability.
 
-This hook finds and uses the real url behind redirections.
+This hook finds and uses the real url behind redirects.
 """
 
 import urllib
@@ -33,7 +33,7 @@ def process(feed, parsed, entry, guid, message):
     # Get the link
     link = entry['link']
 
-    # Remove the redirection and modify the content
+    # Remove the redirect and modify the content
     direct_link = urllib.request.urlopen(link).geturl()
     content = re.sub(re.escape(link), direct_link, content, re.MULTILINE)
 
