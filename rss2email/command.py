@@ -65,6 +65,23 @@ def run(feeds, args):
     finally:
         feeds.save()
 
+def cleandb(feeds, args):
+    "Keep only last seen entries in the database"
+    args.send = False
+    if not args.index:
+        args.index = range(len(feeds))
+    try:
+        for index in args.index:
+            feed = feeds.index(index)
+            _LOG.info('resetting feed {}'.format(feed))
+            feed.reset()
+            try:
+                feed.run(send=args.send)
+            except _error.RSS2EmailError as e:
+                e.log()
+    finally:
+        feeds.save()
+
 def list(feeds, args):
     "List all the feeds in the database"
     for i,feed in enumerate(feeds):

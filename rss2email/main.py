@@ -88,6 +88,13 @@ def run(*args, **kwargs):
         'email', nargs='?',
         help='target email for the new feed')
 
+    cleandb_parser = subparsers.add_parser(
+        'cleandb', help=_command.cleandb.__doc__.splitlines()[0])
+    cleandb_parser.set_defaults(func=_command.cleandb)
+    cleandb_parser.add_argument(
+        'index', nargs='*',
+        help='feeds to clean in the database (defaults to cleaning all feeds)')
+
     run_parser = subparsers.add_parser(
         'run', help=_command.run.__doc__.splitlines()[0])
     run_parser.set_defaults(func=_command.run)
